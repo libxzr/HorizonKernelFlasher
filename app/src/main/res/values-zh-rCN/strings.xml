@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Horizon Kernel Flasher</string>
+    <string name="please_select_kzip">请选择内核的可刷写zip文件</string>
+    <string name="unable_cleanup">清理环境失败</string>
+    <string name="unable_copy">复制文件失败</string>
+    <string name="unable_get_exe">获取可执行文件失败</string>
+    <string name="unable_flash">刷写失败</string>
+    <string name="reboot_complete_title">重启以完成更改</string>
+    <string name="reboot_complete_msg">您想要现在重启设备吗？</string>
+    <string name="yes">是</string>
+    <string name="no">否</string>
+    <string name="failed_reboot">重启失败</string>
+    <string name="about">关于</string>
+    <string name="about_msg">作者：LibXZR (xzr467706992)</string>
+    <string name="ok">好</string>
+    <string name="flash_new">刷入新文件</string>
+    <string name="flashing">正在刷入</string>
+    <string name="flashing_done">刷入完成</string>
+    <string name="failed">刷入错误</string>
+    <string name="task_running">一个任务尚未结束</string>
+    <string name="unable_flash_root">刷入时发生错误，请检查root权限</string>
+</resources>

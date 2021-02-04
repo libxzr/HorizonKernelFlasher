@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Horizon Kernel Flasher</string>
+    <string name="please_select_kzip">Please select the flashable zip of the kernel</string>
+    <string name="unable_cleanup">Unable to cleanup the environment</string>
+    <string name="unable_copy">Unable to copy file</string>
+    <string name="unable_get_exe">Unable to get the executable file</string>
+    <string name="unable_flash">Failed when flashing</string>
+    <string name="reboot_complete_title">Reboot to complete changes</string>
+    <string name="reboot_complete_msg">Would you like to reboot your device now?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="failed_reboot">Failed to reboot</string>
+    <string name="about">About</string>
+    <string name="about_msg">Author: LibXZR (xzr467706992)</string>
+    <string name="ok">ok</string>
+    <string name="flash_new">Flash a new file</string>
+    <string name="flashing">Flashing</string>
+    <string name="flashing_done">Done</string>
+    <string name="failed">Failed</string>
+    <string name="task_running">A task is still running</string>
+    <string name="unable_flash_root">Failed when flashing. Please check root permission.</string>
+</resources>

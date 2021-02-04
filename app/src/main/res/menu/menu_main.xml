@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/flash_new"
+        android:orderInCategory="0"
+        android:title="@string/flash_new">
+    </item>
+
+    <item
+        android:id="@+id/about"
+        android:orderInCategory="1"
+        android:title="@string/about">
+    </item>
+
+</menu>
