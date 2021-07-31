@@ -26,6 +26,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         scrollView=new ScrollView(this);
         logView=new TextView(this);
+        logView.setTextIsSelectable(true);
         scrollView.addView(logView);
         setContentView(scrollView);
 
