@@ -12,6 +12,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends Activity {
+    static final boolean DEBUG = false;
+
     TextView logView;
     ScrollView scrollView;
     enum status{
@@ -102,6 +104,10 @@ public class MainActivity extends Activity {
     }
 
     public static void appendLog(String log, Activity activity){
+        if(DEBUG) {
+            _appendLog(log,activity);
+            return;
+        }
         if(!log.startsWith("ui_print"))
             return;
         log=log.replace("ui_print","");

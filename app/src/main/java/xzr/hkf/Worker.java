@@ -127,7 +127,7 @@ public class Worker extends MainActivity.fileWorker{
         OutputStreamWriter outputStreamWriter=new OutputStreamWriter(process.getOutputStream());
         BufferedReader bufferedReader=new BufferedReader(new InputStreamReader(process.getInputStream()));
         outputStreamWriter.write("export POSTINSTALL="+activity.getFilesDir()+"\n");
-        outputStreamWriter.write("sh "+binary_path+" 3 1 "+file_path+"&& touch "+activity.getFilesDir()+"/done\nexit\n");
+        outputStreamWriter.write("sh "+(MainActivity.DEBUG?"-x ":"")+binary_path+" 3 1 "+file_path+"&& touch "+activity.getFilesDir()+"/done\nexit\n");
         outputStreamWriter.flush();
         String line;
         while((line=bufferedReader.readLine())!=null)
