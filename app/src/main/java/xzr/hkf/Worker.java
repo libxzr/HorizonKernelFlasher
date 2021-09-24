@@ -12,6 +12,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
+import xzr.hkf.utils.AssetsUtil;
+
 public class Worker extends MainActivity.fileWorker {
     Activity activity;
     String file_path;
@@ -68,6 +70,11 @@ public class Worker extends MainActivity.fileWorker {
         }
 
         try {
+            patch();
+        } catch (IOException ignored) {
+        }
+
+        try {
             flash(activity);
         } catch (IOException ioException) {
             is_error = true;
@@ -114,6 +121,13 @@ public class Worker extends MainActivity.fileWorker {
         runWithNewProcessNoReturn(false, "unzip " + file_path + " \"*/update-binary\" -d " + activity.getFilesDir().getAbsolutePath());
         if (!new File(binary_path).exists())
             throw new IOException();
+    }
+
+    void patch() throws IOException {
+        final String mkbootfs_path = activity.getFilesDir().getAbsolutePath() + "/mkbootfs";
+        AssetsUtil.exportFiles(activity, "mkbootfs", mkbootfs_path);
+
+        runWithNewProcessNoReturn(false, "sed -i '/$BB chmod -R 755 tools bin;/i cp -f " + mkbootfs_path + " $AKHOME/tools;' " + binary_path);
     }
 
     void flash(Activity activity) throws IOException {
