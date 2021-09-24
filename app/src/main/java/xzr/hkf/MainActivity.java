@@ -16,18 +16,21 @@ public class MainActivity extends Activity {
 
     TextView logView;
     ScrollView scrollView;
-    enum status{
+
+    enum status {
         flashing,
         flashing_done,
         error,
         normal
     }
+
     static status cur_status;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        scrollView=new ScrollView(this);
-        logView=new TextView(this);
+        scrollView = new ScrollView(this);
+        logView = new TextView(this);
         logView.setTextIsSelectable(true);
         scrollView.addView(logView);
         setContentView(scrollView);
@@ -35,9 +38,9 @@ public class MainActivity extends Activity {
         flash_new();
     }
 
-    void update_title(){
+    void update_title() {
         runOnUiThread(() -> {
-            switch (cur_status){
+            switch (cur_status) {
                 case error:
                     setTitle(R.string.failed);
                     break;
@@ -53,22 +56,22 @@ public class MainActivity extends Activity {
         });
     }
 
-    void flash_new(){
-        if(cur_status== MainActivity.status.flashing){
-            Toast.makeText(this,R.string.task_running,Toast.LENGTH_SHORT).show();
+    void flash_new() {
+        if (cur_status == MainActivity.status.flashing) {
+            Toast.makeText(this, R.string.task_running, Toast.LENGTH_SHORT).show();
             return;
         }
 
         logView.setText("");
-        cur_status=status.normal;
+        cur_status = status.normal;
         update_title();
-        Toast.makeText(this,R.string.please_select_kzip,Toast.LENGTH_LONG).show();
+        Toast.makeText(this, R.string.please_select_kzip, Toast.LENGTH_LONG).show();
         runWithFilePath(this, new Worker(this));
     }
 
     @Override
     public void onBackPressed() {
-        if(cur_status!=status.flashing)
+        if (cur_status != status.flashing)
             super.onBackPressed();
     }
 
@@ -89,38 +92,38 @@ public class MainActivity extends Activity {
                         setAction(Intent.ACTION_VIEW);
                         setData(Uri.parse("https://github.com/xzr467706992/HorizonKernelFlasher"));
                     }})).create().show();
-        }
-        else if(item.getItemId()==R.id.flash_new){
+        } else if (item.getItemId() == R.id.flash_new) {
             flash_new();
         }
         return true;
     }
 
-    public static void _appendLog(String log, Activity activity){
+    public static void _appendLog(String log, Activity activity) {
         activity.runOnUiThread(() -> {
-            ((MainActivity) activity).logView.append(log+"\n");
-            ((MainActivity)activity).scrollView.fullScroll(ScrollView.FOCUS_DOWN);
+            ((MainActivity) activity).logView.append(log + "\n");
+            ((MainActivity) activity).scrollView.fullScroll(ScrollView.FOCUS_DOWN);
         });
     }
 
-    public static void appendLog(String log, Activity activity){
-        if(DEBUG) {
-            _appendLog(log,activity);
+    public static void appendLog(String log, Activity activity) {
+        if (DEBUG) {
+            _appendLog(log, activity);
             return;
         }
-        if(!log.startsWith("ui_print"))
+        if (!log.startsWith("ui_print"))
             return;
-        log=log.replace("ui_print","");
-        _appendLog(log,activity);
+        log = log.replace("ui_print", "");
+        _appendLog(log, activity);
     }
 
-    static class fileWorker extends Thread{
+    static class fileWorker extends Thread {
         public Uri uri;
     }
 
     private static fileWorker file_worker;
-    public static void runWithFilePath(Activity activity,fileWorker what){
-        MainActivity.file_worker=what;
+
+    public static void runWithFilePath(Activity activity, fileWorker what) {
+        MainActivity.file_worker = what;
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("*/*");
         intent.addCategory(Intent.CATEGORY_OPENABLE);
@@ -132,9 +135,9 @@ public class MainActivity extends Activity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
             file_worker.uri = data.getData();
-            if(file_worker!=null) {
+            if (file_worker != null) {
                 file_worker.start();
-                file_worker=null;
+                file_worker = null;
             }
         }
     }
