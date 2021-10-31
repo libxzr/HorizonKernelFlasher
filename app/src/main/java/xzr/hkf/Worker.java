@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.widget.Toast;
 
+import androidx.documentfile.provider.DocumentFile;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -28,7 +30,7 @@ public class Worker extends MainActivity.fileWorker {
         MainActivity.cur_status = MainActivity.status.flashing;
         ((MainActivity) activity).update_title();
         is_error = false;
-        file_path = activity.getFilesDir().getAbsolutePath() + "/anykernel.zip";
+        file_path = activity.getFilesDir().getAbsolutePath() + "/" + DocumentFile.fromSingleUri(activity, uri).getName();
         binary_path = activity.getFilesDir().getAbsolutePath() + "/META-INF/com/google/android/update-binary";
 
         try {
@@ -118,7 +120,7 @@ public class Worker extends MainActivity.fileWorker {
     }
 
     void getBinary() throws IOException {
-        runWithNewProcessNoReturn(false, "unzip " + file_path + " \"*/update-binary\" -d " + activity.getFilesDir().getAbsolutePath());
+        runWithNewProcessNoReturn(false, "unzip \"" + file_path + "\" \"*/update-binary\" -d " + activity.getFilesDir().getAbsolutePath());
         if (!new File(binary_path).exists())
             throw new IOException();
     }
@@ -135,7 +137,7 @@ public class Worker extends MainActivity.fileWorker {
         OutputStreamWriter outputStreamWriter = new OutputStreamWriter(process.getOutputStream());
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
         outputStreamWriter.write("export POSTINSTALL=" + activity.getFilesDir().getAbsolutePath() + "\n");
-        outputStreamWriter.write("sh " + (MainActivity.DEBUG ? "-x " : "") + binary_path + " 3 1 " + file_path + "&& touch " + activity.getFilesDir().getAbsolutePath() + "/done\nexit\n");
+        outputStreamWriter.write("sh " + (MainActivity.DEBUG ? "-x " : "") + binary_path + " 3 1 \"" + file_path + "\"&& touch " + activity.getFilesDir().getAbsolutePath() + "/done\nexit\n");
         outputStreamWriter.flush();
         String line;
         while ((line = bufferedReader.readLine()) != null)

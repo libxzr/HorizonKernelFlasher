@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId "xzr.hkf"
-        minSdkVersion 11
+        minSdkVersion 14
         targetSdkVersion 31
         versionCode 3
         versionName "1.2"
@@ -24,4 +24,8 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+}
+
+dependencies {
+    implementation 'androidx.documentfile:documentfile:1.0.1'
 }
