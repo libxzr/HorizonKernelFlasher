@@ -18,5 +18,6 @@
     <string name="flashing_done">刷入完成</string>
     <string name="failed">刷入错误</string>
     <string name="task_running">一个任务尚未结束</string>
-    <string name="unable_flash_root">刷入时发生错误，请检查root权限</string>
+    <string name="unable_flash_root">没有root权限</string>
+    <string name="unable_flash_error">刷入时发生了错误</string>
 </resources>

@@ -18,5 +18,6 @@
     <string name="flashing_done">Done</string>
     <string name="failed">Failed</string>
     <string name="task_running">A task is still running</string>
-    <string name="unable_flash_root">Failed when flashing. Please check root permission.</string>
+    <string name="unable_flash_root">Unable to get root permission</string>
+    <string name="unable_flash_error">An error occurred while flashing</string>
 </resources>

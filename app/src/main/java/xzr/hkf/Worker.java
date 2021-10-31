@@ -45,6 +45,13 @@ public class Worker extends MainActivity.fileWorker {
             return;
         }
 
+        if (!rootAvailable()) {
+            MainActivity._appendLog(activity.getResources().getString(R.string.unable_flash_root), activity);
+            MainActivity.cur_status = MainActivity.status.error;
+            ((MainActivity) activity).update_title();
+            return;
+        }
+
         try {
             copy();
         } catch (IOException ioException) {
@@ -82,7 +89,7 @@ public class Worker extends MainActivity.fileWorker {
             is_error = true;
         }
         if (is_error) {
-            MainActivity._appendLog(activity.getResources().getString(R.string.unable_flash_root), activity);
+            MainActivity._appendLog(activity.getResources().getString(R.string.unable_flash_error), activity);
             MainActivity.cur_status = MainActivity.status.error;
             ((MainActivity) activity).update_title();
             return;
@@ -104,6 +111,15 @@ public class Worker extends MainActivity.fileWorker {
         });
         MainActivity.cur_status = MainActivity.status.flashing_done;
         ((MainActivity) activity).update_title();
+    }
+
+    boolean rootAvailable() {
+        try {
+            String ret = runWithNewProcessReturn(true, "id");
+            return ret != null && ret.contains("root");
+        } catch (IOException e) {
+            return false;
+        }
     }
 
     void copy() throws IOException {
@@ -160,6 +176,10 @@ public class Worker extends MainActivity.fileWorker {
     }
 
     void runWithNewProcessNoReturn(boolean su, String cmd) throws IOException {
+        runWithNewProcessReturn(su, cmd);
+    }
+
+    String runWithNewProcessReturn(boolean su, String cmd) throws IOException {
         Process process = null;
         if (su) {
             process = new ProcessBuilder("su").redirectErrorStream(true).start();
@@ -171,11 +191,16 @@ public class Worker extends MainActivity.fileWorker {
         outputStreamWriter.write(cmd + "\n");
         outputStreamWriter.write("exit\n");
         outputStreamWriter.flush();
-        while (bufferedReader.readLine() != null) {
+        String tmp;
+        StringBuilder ret = new StringBuilder();
+        while ((tmp = bufferedReader.readLine()) != null) {
+            ret.append(tmp);
+            ret.append("\n");
         }
         outputStreamWriter.close();
         bufferedReader.close();
         process.destroy();
+        return ret.toString();
     }
 
 }
